@@ -1,0 +1,79 @@
+# ✨ Arch Linux / Sway Dotfiles 仓库
+
+本项目包含了我在 Arch Linux 环境下使用的 **Sway Wayland 合成器**配置和相关的 [dotfiles](https://calendar0917.github.io/quartz/01_%E7%9F%A5%E8%AF%86%E5%BA%93/%E6%9D%82%E9%A1%B9/stow) 备份。
+
+本配置的核心理念是追求**高效、极简、完全键盘驱动**的 Wayland 桌面体验。
+
+## ⚙️ 部署与管理
+
+本项目使用 **[Stow](https://calendar0917.github.io/quartz/01_%E7%9F%A5%E8%AF%86%E5%BA%93/%E6%9D%82%E9%A1%B9/stow)** 进行配置文件（dotfiles）的管理和部署。Stow 允许将配置文件集中存储，并通过符号链接（symlinks）部署到 `$HOME` 目录，确保配置文件的整洁和可维护性。
+
+### 🚀 快速部署指南
+
+1.  **克隆仓库：** 将本仓库克隆到您的 `$HOME` 目录下的 `~/dotfiles` 文件夹中。
+    ```bash
+    git clone [你的仓库地址] ~/dotfiles
+    ```
+
+2.  **进入 Stow 根目录：**
+    ```bash
+    cd ~/dotfiles
+    ```
+
+3.  **部署配置：** 使用 `stow` 命令将单个包的配置创建符号链接到 `$HOME` 目录。
+    ```bash
+    # 部署 sway 配置
+    stow sway
+
+    # 部署 waybar 配置
+    stow waybar
+
+    # 部署 kitty 终端配置
+    stow kitty
+
+    # 部署 zsh 配置
+    stow zsh
+
+    # ... 对其他所需包重复此操作
+    ```
+
+---
+
+## 💻 核心组件概览 (Wayland/Sway 生态)
+
+以下是本配置仓库包含的主要组件及其作用。
+
+| 类别 | 组件名称 | 用途描述 | 配置文件路径 (Stow 相对路径) |
+| :--- | :--- | :--- | :--- |
+| **基础合成器** | **Sway** | Wayland 平铺式窗口管理器核心。 | `~/.config/sway/config` |
+| **状态栏** | **Waybar** | 高度可定制的状态栏，用于显示系统状态、工作区和通知。 | `~/.config/waybar/config` |
+| **启动器** | **Fuzzel** | **高效且轻量的** Rofi 式应用程序启动器，基于 Wayland 原生协议。 | `~/.config/fuzzel/fuzzel.ini` |
+| **终端模拟器** | **Kitty** | 快速、功能丰富的 GPU 加速终端。 | `~/.config/kitty/kitty.conf` |
+| **Shell** | **Zsh** | 默认 Shell，配置了 Oh My Zsh/Powerlevel10k 等提升效率的插件。 | `~/.zshrc` |
+| **通知系统** | **Mako** | 轻量级且原生的 Wayland 通知守护进程。 | `~/.config/mako/config` |
+| **屏幕截图** | **Grim + Slurp + wl-copy** | **Wayland 原生截图方案：** Grim (截图) + Slurp (选区) + wl-copy (复制到剪贴板)。 | *脚本位于 Sway 配置中* |
+| **显示器控制** | **Kanshi** | 自动管理多显示器配置，特别是在插拔显示器时自动应用预设布局。 | `~/.config/kanshi/config` |
+| **锁屏** | **Swaylock** | Sway 原生的锁屏工具，安全且简洁。 | `~/.config/swaylock/config` |
+| **壁纸管理** | **Swaybg** | Sway 原生的简单壁纸设置工具。 | *通常在 Sway 启动时调用* |
+| **文件管理器** | **Thunar** | 轻量级的图形文件管理器。 | *（依赖 GTK 主题配置）* |
+
+---
+
+## 🛠️ 配置亮点与自定义
+
+* **键盘驱动：** 所有的窗口管理、应用启动、音量亮度调节均通过 Sway 绑定键实现。
+* **外观一致性：** 统一的 GTK 主题和 Waybar 样式，追求深色/极简外观。
+* **脚本集成：** 快捷键绑定了许多自定义 Shell 脚本，用于更便捷的音量、亮度调节、以及一键截图。
+
+## ⚠️ 前提条件与依赖
+
+在部署这些配置之前，请确保您的系统已经安装了以下主要的软件包：
+
+* `sway` (主合成器)
+* `waybar` (状态栏)
+* `fuzzel` (启动器)
+* `kitty` (终端)
+* `mako` (通知)
+* `grim`, `slurp`, `wl-clipboard` (截图工具链)
+* `kanshi` (多显示器管理)
+* `brightnessctl` / `pactl` (用于音量和亮度控制的工具)
