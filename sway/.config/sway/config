@@ -58,6 +58,8 @@ input type:keyboard {
 # 启动终端
 bindsym $mod+t exec $term
 
+# 调节亮度
+
 # 杀掉当前窗口 (Kill Process)
 bindsym $mod+q kill
 
@@ -118,6 +120,7 @@ exec_always autotiling
 exec_always pkill kanshi; exec kanshi
 # 环境变量
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec_always nm-applet
 
 # --- 调整模式配置 (Resize Mode) ---
 # 1. 定义模式名称
