@@ -1,0 +1,10 @@
+.ssh/
+id_rsa
+id_ed25519
+
+.gnupg/
+
+.bash_history
+.zsh_history
+
+secrets.env
