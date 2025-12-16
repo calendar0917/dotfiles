@@ -52,6 +52,9 @@ input type:touchpad {
 # 键盘设置
 input type:keyboard {
     xkb_layout us
+    xkb_numlock enabled
+    repeat_delay 250
+    repeat_rate 30
 }
 
 # --- 关键快捷键 (Keybindings) ---
@@ -64,7 +67,7 @@ bindsym $mod+t exec $term
 bindsym $mod+q kill
 
 # 打开文件管理器
-bindsym $mod+e exec thunar
+bindsym $mod+f exec thunar
 
 # 启动器
 bindsym $mod+d exec $menu
@@ -74,6 +77,16 @@ bindsym $mod+Shift+c reload
 
 # 退出 Sway
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit Sway?' -B 'Yes, exit sway' 'swaymsg exit'
+
+# --- 窗口布局切换 (Layout Switching) ---
+# 切换到堆叠布局 (Stacking)
+bindsym $mod+s layout stacking
+
+# 切换到标签布局 (Tabbed)
+bindsym $mod+w layout tabbed
+
+# 循环切换布局 (平铺/堆叠/标签)
+bindsym $mod+e layout toggle split
 
 # 窗口移动 (Vim 风格: h j k l)
 bindsym $mod+h focus left
@@ -97,9 +110,19 @@ bindsym $mod+Shift+2 move container to workspace number 2
 bindsym $mod+Shift+3 move container to workspace number 3
 bindsym $mod+Shift+4 move container to workspace number 4
 bindsym $mod+Shift+5 move container to workspace number 5
+# --- Scratchpad (草稿本) ---
+# 将当前窗口移入/移出 Scratchpad (隐藏)
+bindsym $mod+Shift+minus move scratchpad
+
+# 显示/循环 Scratchpad 中的窗口
+bindsym $mod+minus scratchpad show
 
 # 截图 (Grim + Slurp) -> 保存到剪贴板和 Pictures 目录
-bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy && grim -g "$(slurp)" ~/Pictures/screenshot-$(date +'%Y-%m-%d-%H%M%S').png
+bindsym $mod+Shift+s exec grim -g "$(slurp)" - | tee ~/Pictures/screenshot-$(date +'%Y-%m-%d-%H%M%S').png | wl-copy
+# 强制执行剪贴板监听
+exec_always wl-paste --watch cliphist store
+# 快捷键：按 Mod+c 呼出剪贴板历史菜单
+bindsym $mod+v exec cliphist list | fuzzel -d | cliphist decode | wl-copy
 # 多媒体控制 (音量/亮度)
 bindsym XF86AudioRaiseVolume exec pamixer -i 5
 bindsym XF86AudioLowerVolume exec pamixer -d 5
@@ -121,6 +144,9 @@ exec_always pkill kanshi; exec kanshi
 # 环境变量
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 exec_always nm-applet
+# --- 系统服务 ---
+# 身份认证代理 (Polkit)
+exec_always /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
 
 # --- 调整模式配置 (Resize Mode) ---
 # 1. 定义模式名称
