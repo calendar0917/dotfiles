@@ -1,6 +1,6 @@
 # 场景 1: 单兵作战 (只用笔记本)
 profile undocked {
-    output eDP-1 enable scale 1.5 position 0,0
+    output eDP-1 enable scale 2 position 0,0
 }
 
 # 场景 2: 基地模式 (宿舍外接显示器)
