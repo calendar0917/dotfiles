@@ -5,6 +5,7 @@ fi
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export PATH="$HOME/.config/emacs/bin:$PATH"
 
 # =============================================================================
 # 主题设置
