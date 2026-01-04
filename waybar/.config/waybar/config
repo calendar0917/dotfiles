@@ -2,9 +2,9 @@
     "layer": "top",
     "position": "top",
     "height": 30,
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", "sway/mode", "network"],
     "modules-center": ["clock"],
-    "modules-right": ["network", "cpu", "memory", "battery", "pulseaudio", "tray", "custom/power"],
+    "modules-right": ["cpu", "memory", "battery", "pulseaudio", "tray", "custom/power"],
     
     "sway/workspaces": {
         "disable-scroll": true,
@@ -36,10 +36,10 @@
         "interval": 1,
         
         // WiFi 连接时的显示格式：图标 + 下载速度 + 上传速度
-        "format-wifi": "  ⬇{bandwidthDownBytes} ⬆{bandwidthUpBytes}",
+        "format-wifi": "  ⬇{bandwidthDownBytes:>7} ⬆{bandwidthUpBytes:>7}",
         
         // 有线连接时的显示格式
-        "format-ethernet": "󰈀 ⬇{bandwidthDownBytes} ⬆{bandwidthUpBytes}",
+        "format-ethernet": "󰈀 ⬇{bandwidthDownBytes:>7} ⬆{bandwidthUpBytes:>7}",
         
         // 断网时的显示
         "format-disconnected": "⚠ Disconnected",
@@ -48,7 +48,8 @@
         "tooltip-format": "{ifname}: {ipaddr}/{cidr} (Signal: {signalStrength}%)",
         
         // 最小宽度，防止数字跳动导致栏位抖动
-        "min-length": 15
+        "min-length": 25,
+        "max-length": 25
     },
     "pulseaudio": {
         "format": "{volume}% {icon}",

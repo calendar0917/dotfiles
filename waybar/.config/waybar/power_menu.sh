@@ -18,19 +18,19 @@ selected=$(echo -e "$options" | wofi --dmenu --width 200 --height 200 --cache-fi
 
 # 根据选择执行命令
 case $selected in
-    "$lock")
-        swaylock -f -i /home/calendar/Pictures/background/壁纸.jpg -s fill
-        ;;
-    "$suspend")
-        systemctl suspend
-        ;;
-    "$logout")
-        swaymsg exit
-        ;;
-    "$reboot")
-        systemctl reboot
-        ;;
-    "$shutdown")
-        systemctl poweroff
-        ;;
+"$lock")
+  swaylock -f -i /home/calendar/Pictures/background/壁纸.jpg -s fill
+  ;;
+"$suspend")
+  swaylock -f -i /home/calendar/Pictures/background/壁纸.jpg -s fill && sleep 0.2 && systemctl suspend
+  ;;
+"$logout")
+  swaymsg exit
+  ;;
+"$reboot")
+  systemctl reboot
+  ;;
+"$shutdown")
+  systemctl poweroff
+  ;;
 esac
