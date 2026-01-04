@@ -1,53 +1,103 @@
+/* 全局重置 */
 * {
     border: none;
     border-radius: 0;
-    font-family: "JetBrainsMono Nerd Font";
+    font-family: "JetBrainsMono Nerd Font", "Roboto Mono", monospace;
     font-size: 13px;
     min-height: 0;
 }
 
+/* 整体背景：悬浮、透明、圆角 */
 window#waybar {
-    background-color: #2e3440; /* Nord0 */
-    color: #d8dee9; /* Nord4 */
-    border-bottom: 2px solid #4c566a;
+    background-color: rgba(46, 52, 64, 0.85); /* Nord0，带透明度 */
+    color: #d8dee9;
+    /* 让 Bar 悬浮起来的关键：margin 和圆角 */
+    margin: 6px 10px; 
+    border-radius: 12px;
+    /* 增加一个非常细的边框，提升精致感 */
+    border: 1px solid rgba(76, 86, 106, 0.5);
+}
+
+/* 工作区模块 */
+#workspaces {
+    background-color: rgba(59, 66, 82, 0.5); /* 更深的暗色 */
+    margin: 4px;
+    padding: 0 5px;
+    border-radius: 8px;
 }
 
 #workspaces button {
-    padding: 0 5px;
-    background-color: transparent;
+    padding: 0 8px;
     color: #d8dee9;
+    transition: all 0.3s ease; /* 增加平滑过渡 */
 }
 
-#workspaces button.focused {
+#workspaces button.focused, #workspaces button.active {
+    color: #88c0d0; /* Nord8 亮蓝 */
     background-color: #4c566a;
-    color: #88c0d0; /* Nord8 */
+    border-radius: 6px;
+    /* 激活时底部加一个小亮条 */
+    box-shadow: inset 0 -2px 0 #88c0d0;
 }
 
-#clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray, #mode {
-    padding: 0 10px;
-    margin: 0 4px;
-    background-color: #3b4252; /* Nord1 */
-    color: #eceff4;
+#workspaces button:hover {
+    background-color: rgba(136, 192, 208, 0.2);
+    border-radius: 6px;
 }
 
+/* 通用模块样式：把模块做成独立的“胶囊” */
+#clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray, #mode, #custom-power {
+    padding: 0 12px;
+    margin: 4px 2px;
+    background-color: rgba(59, 66, 82, 0.8); /* Nord1 */
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+/* 给特定模块点缀色彩 */
 #clock {
-    background-color: #5e81ac; /* Nord10 */
-    color: #eceff4;
+    color: #88c0d0; /* Nord8 */
+    font-weight: bold;
 }
 
-#battery.warning {
-    background-color: #ebcb8b; /* Nord13 */
-    color: #2e3440;
+#network {
+    color: #a3be8c; /* Nord14 绿色，代表网络通畅 */
 }
 
-#battery.critical {
-    background-color: #bf616a; /* Nord11 */
-    color: #eceff4;
+#pulseaudio {
+    color: #b48ead; /* Nord15 紫色 */
 }
+
+#cpu {
+    color: #d08770; /* Nord12 橙色 */
+}
+
+/* 鼠标悬停时放大效果，增加交互感 */
+#clock:hover, #network:hover, #pulseaudio:hover, #cpu:hover, #memory:hover {
+    background-color: #4c566a;
+}
+
+/* 电池警告状态 */
+#battery.warning { color: #ebcb8b; }
+#battery.critical { color: #bf616a; animation: blink 1s steps(5) infinite; }
+
+/* 关机按钮：做成圆形或者更有识别度的形状 */
 #custom-power {
-    background-color: #3b4252; /* Nord11 (红色) */
-    color: #eceff4;            /* Nord6 (白色) */
-    padding: 0 10px;
-    margin-left: 10px;         /* 与左边的模块拉开距离 */
-    border-radius: 0px;        /* 保持硬朗风格，或者改成 4px 圆角 */
+    background-color: rgba(59, 66, 82, 0.8); /* 与其它模块一致的 Nord1 */
+    color: #88c0d0;           /* 使用 Nord8 亮蓝点缀图标，不刺眼 */
+    padding: 0 15px;
+    margin-left: 6px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+#custom-power:hover {
+    background-color: #bf616a; /* 只有悬停时才变红，提示危险操作 */
+    color: #eceff4;           /* 文字变白 */
+    box-shadow: 0 0 10px rgba(191, 97, 106, 0.5); /* 增加一点红色呼吸感 */
+}
+
+/* 关键帧动画：电池告警闪烁 */
+@keyframes blink {
+    to { background-color: #eceff4; color: #bf616a; }
 }

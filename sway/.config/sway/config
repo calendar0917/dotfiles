@@ -62,7 +62,12 @@ input type:keyboard {
 # 启动终端
 bindsym $mod+t exec $term
 
-# 调节亮度
+# 按下 Mod + b 切换 Waybar 显示/隐藏
+bindsym $mod+b exec pkill -USR1 waybar
+
+# 休眠、锁屏
+bindsym Alt+l exec swaylock -f -i /home/calendar/Pictures/background/壁纸.jpg -s fill
+bindsym Alt+Shift+l exec swaylock -f -i /home/calendar/Pictures/background/壁纸.jpg -s fill && sleep 0.2 && systemctl suspend
 
 # 杀掉当前窗口 (Kill Process)
 bindsym $mod+q kill
@@ -137,10 +142,15 @@ bar {
     swaybar_command waybar
 }
 
+# 锁屏
+# 使用 swayidle 管理休眠锁屏
+exec swayidle -w \
+    timeout 300 'swaylock -f -i /home/calendar/Pictures/background/壁纸.jpg -s fill' \
+    before-sleep 'swaylock -f -i /home/calendar/Pictures/background/壁纸.jpg -s fill'
 # 通知服务
 exec mako
 exec --no-startup-id fcitx5 -d --replace
-exec_always autotiling
+exec autotiling
 exec_always pkill kanshi; exec kanshi
 # 环境变量
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
