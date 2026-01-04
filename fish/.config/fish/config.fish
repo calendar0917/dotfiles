@@ -56,7 +56,7 @@ abbr -a yc 'y ~/Project/code/'
 abbr -a ycon 'y ~/Project/quartz/content'
 abbr -a ga 'git add .'
 abbr -a gm 'git commit -m'
-abbr -a gp 'git puth'
+abbr -a gp 'git push'
 
 if status is-interactive
     # 禁用 Fish 默认的问候语
