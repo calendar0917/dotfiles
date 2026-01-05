@@ -127,6 +127,7 @@ bindsym $mod+minus scratchpad show
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | tee ~/Pictures/screenshot-$(date +'%Y-%m-%d-%H%M%S').png | wl-copy
 # 强制执行剪贴板监听
 exec_always wl-paste --watch cliphist store
+exec ~/dotfiles/script/clip-bridge.py
 # 快捷键：按 Mod+c 呼出剪贴板历史菜单
 bindsym $mod+v exec cliphist list | fuzzel -d | cliphist decode | wl-copy
 # 多媒体控制 (音量/亮度)
