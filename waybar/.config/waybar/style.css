@@ -45,6 +45,11 @@ window#waybar {
     border-radius: 6px;
 }
 
+/* 针对 Niri 特有的空状态进行调暗 */
+#workspaces button.empty {
+    color: rgba(216, 222, 233, 0.3); /* 降低透明度 */
+}
+
 /* 通用模块样式：把模块做成独立的“胶囊” */
 #clock, #battery, #cpu, #memory, #network, #pulseaudio, #tray, #mode, #custom-power {
     padding: 0 12px;

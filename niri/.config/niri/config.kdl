@@ -424,8 +424,6 @@ binds {
     }
     Mod+E {spawn "thunar";}
     Mod+P { spawn-sh "niri msg output eDP-1 off"; }
-    Ctrl+1 {spawn-sh "flameshot gui";}
-    
     // Super + Alt + I: 启用内置显示器
     Mod+Alt+P { spawn-sh "niri msg output eDP-1 on"; }
     
@@ -433,6 +431,10 @@ binds {
     Mod+Alt+V {spawn "clipse-gui";}
     Mod+Shift+P {spawn-sh "pkill waybar || true && waybar";}
     Mod+Shift+Slash { show-hotkey-overlay; }
+    // Ctrl + 1 进行录屏
+    Ctrl+1 {
+        spawn "sh" "-c" "if pgrep wl-screenrec; then killall -s SIGINT wl-screenrec && notify-send '录屏已停止' '视频已保存'; else wl-screenrec -g \"$(slurp)\" -f /home/calendar/Downloads/录屏_$(date +%Y-%m-%d_%H-%M-%S).mp4; fi"
+    }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "kitty"; }
@@ -531,8 +533,8 @@ binds {
 
     Mod+Page_Down      { focus-workspace-down; }
     Mod+Page_Up        { focus-workspace-up; }
-    Mod+U              { focus-workspace-down; }
-    Mod+I              { focus-workspace-up; }
+    Mod+N              { focus-workspace-down; }
+    Mod+U              { focus-workspace-up; }
     Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
     Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
     Mod+Shift+U         { move-column-to-workspace-down; }
@@ -596,15 +598,15 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
-    Mod+Ctrl+1 { move-column-to-workspace 1; }
-    Mod+Ctrl+2 { move-column-to-workspace 2; }
-    Mod+Ctrl+3 { move-column-to-workspace 3; }
-    Mod+Ctrl+4 { move-column-to-workspace 4; }
-    Mod+Ctrl+5 { move-column-to-workspace 5; }
-    Mod+Ctrl+6 { move-column-to-workspace 6; }
-    Mod+Ctrl+7 { move-column-to-workspace 7; }
-    Mod+Ctrl+8 { move-column-to-workspace 8; }
-    Mod+Ctrl+9 { move-column-to-workspace 9; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+1 { move-window-to-workspace 1; }
