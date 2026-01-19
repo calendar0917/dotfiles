@@ -7,6 +7,7 @@ fish_add_path "$HOME/.config/emacs/bin"
 
 # Java 环境设置
 set -gx JAVA_TOOL_OPTIONS "-Dsun.java2d.uiScale=2.0 -Dsun.java2d.dpiaware=false"
+set -g GTK_CSD 0
 
 # Cargo 路径配置
 if test -d $HOME/.cargo/bin
@@ -17,12 +18,12 @@ end
 zoxide init fish | source
 
 # vim 模式
-set -g fish_key_bindings fish_vi_key_bindings
+#set -g fish_key_bindings fish_vi_key_bindings
 # 设置 vi 模式下的光标形状
-set fish_cursor_default block # Normal 模式：方块
-set fish_cursor_insert line # Insert 模式：竖线
-set fish_cursor_replace_one underscore # 替换模式：下划线
-set fish_cursor_visual block # Visual 模式：方块
+#set fish_cursor_default block # Normal 模式：方块
+#set fish_cursor_insert line # Insert 模式：竖线
+#set fish_cursor_replace_one underscore # 替换模式：下划线
+#set fish_cursor_visual block # Visual 模式：方块
 
 # =============================================================================
 # 别名设置 (Aliases)
@@ -39,7 +40,6 @@ alias ccon='cd ~/Project/quartz/content'
 alias ch='cd ~'
 # pacman
 alias psyu='sudo pacman -Syu'
-alias ps='sudo pacman -S'
 # 快速开启应用
 alias n='nvim'
 alias bt='btop'
@@ -49,6 +49,7 @@ alias ask="aichat -m deepseek:deepseek-chat -- --stram true --role assistant -e"
 alias chat="aichat -m deepseek:deepseek-chat --role assistant"
 alias think="aichat -m deepseek:deepseek-reasoner"
 
+abbr ps 'sudo pacman -S'
 abbr -a ydon 'y ~/Downloads'
 abbr -a yconf 'y ~/.config'
 abbr -a ypro 'y ~/Project'
