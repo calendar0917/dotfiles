@@ -402,7 +402,7 @@ window-rule {
     //剪掉圆角外的窗口内容
     clip-to-geometry true
     //透明度
-    opacity 0.99
+    opacity 1.00
     //禁止边框画到窗口后面
     draw-border-with-background false
 }

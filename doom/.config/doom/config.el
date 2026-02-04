@@ -5,7 +5,7 @@
 
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets. It is optional.
+;; clients, file templates, and snippets. It is optional.
 ;; (setq user-full-name "John Doe"
 ;;       user-mail-address "john@doe.com")
 
@@ -31,7 +31,7 @@
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+;; up, `M-x eval-region' to execute elisp code, and `M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 ;;There are two ways to load a theme. Both assume the theme is installed and
@@ -46,8 +46,8 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
-(setq org-roam-directory "~/org/roam")
-(setq org-agenda-files '("~/org/")) ; 识别 ~/org 文件夹下所有的 .org 文件
+(setq org-roam-directory "~/org/roam/")
+;; org-agenda-files is configured later with detailed file list
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -69,14 +69,14 @@
 ;; - `use-package!' for configuring packages
 ;; - `after!' for running code after a package has loaded
 ;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
+;;   this file. Emacs searches the `load-path` when you load packages with
+;;   `require` or `use-package`.
 ;; - `map!' for binding new keys
 ;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+;; To get information about any of these functions, move the cursor over
+;; the highlighted symbol and press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how to use them.
+;; Alternatively, use 'C-h o' to look up a symbol (functions, variables, faces,
 ;; etc).
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
@@ -103,6 +103,184 @@
       auto-window-vscroll nil)
 
 ;; 鼠标滚动设置
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)) ; 一次滚动一行
-      mouse-wheel-progressive-speed nil            ; 禁止加速滚动
-      mouse-wheel-follow-mouse 't)                 ; 鼠标指在哪就滚哪
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))
+      mouse-wheel-progressive-speed nil
+      mouse-wheel-follow-mouse 't)
+
+;; lsp 补全配置
+(setq lsp-completion-provider :capf) ; 强制使用 Emacs 的标准补全接口
+(after! c-mode
+  (set-company-backend! 'c-mode
+    '(:separate company-capf company-yasnippet company-files)))
+(after! lsp-clangd
+  (setq lsp-clients-clangd-args
+        '(
+          ;; 1. 基础性能优化
+          "-j=4"                         ; 限制多线程占用
+          "--background-index"           ; 允许后台索引
+          "--clang-tidy"                 ; 开启静态检查
+
+          ;; 2. 补全行为优化 (LazyVim 风格)
+          "--completion-style=detailed"  ; 显示详细补全信息
+          "--header-insertion=never"     ; 禁止自动插入头文件 (内核开发中自动插入往往会乱)
+          "--header-insertion-decorators"
+
+          ;; 3. 增强补全的"宽容度" (关键！)
+          "--all-scopes-completion"      ; 允许补全不在当前 scope 的符号
+          "--limit-results=20"           ; 限制结果数，提高速度
+
+          ;; 4. 强制指定位置 (如果你的 compile_commands.json 找不到)
+          "--compile-commands-dir=."
+          )))
+;; 强制让补全弹窗在输入 1 个字符时就跳出来 (复刻 LazyVim 体验)
+(after! company
+  (setq company-idle-delay 0
+        company-minimum-prefix-length 1))
+
+;; 可视行跳转
+(map! :nv "j" #'evil-next-visual-line
+      :nv "k" #'evil-previous-visual-line)
+
+;; wikilink
+(setq markdown-enable-wiki-links t)
+
+;; 中文输入法切换问题
+(use-package! sis
+  :config
+  ;; 1. 配置后端（根据你第一步的测试结果选择）
+  ;; 如果是 fcitx5，使用 'fcitx5；如果是 ibus，使用 'ibus-client
+  (sis-ism-lazyman-config "1" "2" 'fcitx5)
+
+  ;; 2. 开启 Evil 模式的自动切换
+  ;; 退出 insert 模式时，自动切回英文（状态 1）
+  (sis-global-cursor-color-mode t) ; 还可以根据输入法改变光标颜色，视觉提醒
+  (sis-global-respect-mode t)      ; 核心功能：退出 insert 模式切换输入法
+
+  ;; 3. 开启 Context 记忆
+  ;; 当你回到 insert 模式时，恢复上次在该 Buffer 使用的输入法（非常人性化）
+  (sis-global-context-mode t)
+
+  ;; 4. 优化：在特定的命令后强制切回英文
+  ;; 比如按下 SPC 后通常是要输入命令，强制切英文
+  (add-hook 'doom-first-input-hook #'sis-global-respect-mode))
+
+;; 强制定义一个完全不依赖日历的函数
+(defun my/quick-insert-time ()
+  "直接在光标处插入当前的精确时间，不弹出任何窗口"
+  (interactive)
+  (insert (format-time-string "[%Y-%m-%d %a %H:%M]")))
+
+;; 绑定到一个你绝对不会按错的组合键
+(map! :leader
+      :desc "Quick timestamp" "i T" #'my/quick-insert-time)
+
+;; ============================
+;; Org-mode 核心路径与 GTD
+;; ============================
+(setq org-agenda-files
+      (list "~/org/inbox.org"    ; 收集箱
+            "~/org/todo.org"     ; 待办
+            "~/org/projects.org" ; 项目
+            "~/org/tickler.org"  ; 备忘
+            "~/org/journal/"))   ; 日记
+
+;; ============================
+;; Org-modern 美化
+;; ============================
+(use-package! org-modern
+  :hook (org-mode . org-modern-mode)
+  :config
+  (setq org-modern-star '("◉" "○" "◈" "◇" "✳" "◆" "□" "▪" "▫")))
+
+;; ============================
+;; GPTel AI 配置 (NewAPI)
+;; ============================
+(use-package! gptel
+  :config
+  ;; 连接到本地 NewAPI
+  (setq gptel-model "glm-4.7"
+        gptel-backend (gptel-make-openai "NewAPI"
+                        :host "localhost:3000"
+                        :key "sk-kBSBKQQHlXHNNzSUVTNdubISw8n0T52rqXnf7xgqdjHEHP6W"
+                        :stream t
+                        :protocol "http"
+                        :curl-args '("--noproxy" "localhost,127.0.0.1")
+                        :models '("gemini-3-pro-preview" "glm-4.7" "deepseek-v3" "deepseek-r1")))
+  ;; 使用 curl 而不是 url-retrieve (更稳定)
+  (setq gptel-use-curl t)
+  ;; 绑定快捷键到 leader key
+  (map! :leader
+        :desc "GPTel Menu" "o a" #'gptel-menu
+        :desc "GPTel Send" "o s" #'gptel-send))
+
+;; ============================
+;; GPTel Advanced Context Functions
+;; ============================
+
+(defun my/gptel-add-project-files ()
+  "Interactively select and add multiple files from current project to gptel context."
+  (interactive)
+  (if-let ((project (project-current))
+           (files (project-files project)))
+      (let ((selected (completing-read-multiple "Add files to context: " files)))
+        (if selected
+            (progn
+              (dolist (file selected)
+                (gptel-add-file file))
+              (message "Added %d files to gptel context" (length selected)))
+          (message "No files selected")))
+    (message "Not in a project")))
+
+(defun my/gptel-add-git-diff ()
+  "Add files modified in git to gptel context."
+  (interactive)
+  (let* ((default-directory (if-let ((proj (project-current)))
+                               (project-root proj)
+                             default-directory))
+         (changed-files (split-string 
+                         (shell-command-to-string 
+                          "git diff --name-only 2>/dev/null")
+                         "\n" t)))
+    (if changed-files
+        (progn
+          (dolist (file changed-files)
+            (when (file-exists-p file)
+              (gptel-add-file file)))
+          (message "Added %d changed files to context" (length changed-files)))
+      (message "No changed files found"))))
+
+(defun my/gptel-add-directory-files (dir)
+  "Add files from DIR to gptel context.
+Excludes common junk directories (node_modules, .git, .env, dist, build).
+Prompts for confirmation if more than 20 files would be added."
+  (interactive "DAdd directory: ")
+  (let* ((excluded-dirs '("node_modules" ".git" ".env" "dist" "build" "target" "__pycache__" ".venv" "venv"))
+         (files (directory-files-recursively dir ""))
+         (filtered (seq-filter 
+                   (lambda (file)
+                     (and (not (string-match-p "/\\." (file-relative-name file dir))) ; hidden files
+                          (not (seq-some (lambda (excl) (string-match-p excl file)) excluded-dirs))))
+                   files)))
+    (if filtered
+        (let ((count (length filtered)))
+          (if (and (> count 20)
+                   (not (y-or-n-p (format "Add %d files from %s? " count dir))))
+              (message "Cancelled: too many files")
+            (dolist (file filtered)
+              (when (file-regular-p file)
+                (gptel-add-file file)))
+            (message "Added %d files from %s to context" count dir)))
+      (message "No files found in %s" dir))))
+
+;; ============================
+;; GPTel Advanced Context Keybindings
+;; ============================
+;; Usage:
+;;   SPC o c f - Add project files (multi-select)
+;;   SPC o c g - Add git-modified files
+;;   SPC o c d - Add directory files
+(map! :leader
+      :prefix ("o c" . "gptel context")
+      :desc "Add project files" "f" #'my/gptel-add-project-files
+      :desc "Add git changed files" "g" #'my/gptel-add-git-diff
+      :desc "Add directory files" "d" #'my/gptel-add-directory-files)

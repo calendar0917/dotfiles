@@ -2,6 +2,10 @@
 # 环境变量 (Environment Variables)
 # =============================================================================
 
+# GEMINI Environment Variables
+set -gx GOOGLE_GEMINI_BASE_URL "http://localhost:3000"
+set -gx GEMINI_API_KEY sk-kBSBKQQHlXHNNzSUVTNdubISw8n0T52rqXnf7xgqdjHEHP6W
+
 # 路径设置
 fish_add_path "$HOME/.config/emacs/bin"
 
@@ -30,8 +34,21 @@ zoxide init fish | source
 # =============================================================================
 
 # 代理设置
-alias proxy='set -gx all_proxy http://127.0.0.1:20172'
-alias unproxy='set -e all_proxy'
+# 开启代理函数
+function pon
+    set -gx http_proxy http://127.0.0.1:7897
+    set -gx https_proxy http://127.0.0.1:7897
+    set -gx all_proxy socks5://127.0.0.1:7897
+    echo 终端代理已开启
+end
+
+# 关闭代理函数
+function poff
+    set -e http_proxy
+    set -e https_proxy
+    set -e all_proxy
+    echo 终端代理已关闭
+end
 # 路径跳转
 alias cdot='cd ~/dotfiles/'
 alias cc='cd ~/Project/code'

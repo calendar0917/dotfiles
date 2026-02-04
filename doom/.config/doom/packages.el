@@ -53,3 +53,6 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 (package! olivetti)
+(package! sis)
+(package! gptel)
+(package! org-modern)
