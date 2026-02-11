@@ -8,6 +8,10 @@ set -gx GEMINI_API_KEY sk-kBSBKQQHlXHNNzSUVTNdubISw8n0T52rqXnf7xgqdjHEHP6W
 
 # 路径设置
 fish_add_path "$HOME/.config/emacs/bin"
+# 添加 npm 全局包路径
+fish_add_path $HOME/.npm-global/bin
+# fnm 初始化
+fnm env --use-on-cd --shell fish | source
 
 # Java 环境设置
 set -gx JAVA_TOOL_OPTIONS "-Dsun.java2d.uiScale=2.0 -Dsun.java2d.dpiaware=false"
@@ -66,7 +70,6 @@ alias ask="aichat -m deepseek:deepseek-chat -- --stram true --role assistant -e"
 alias chat="aichat -m deepseek:deepseek-chat --role assistant"
 alias think="aichat -m deepseek:deepseek-reasoner"
 
-abbr ps 'sudo pacman -S'
 abbr -a ydon 'y ~/Downloads'
 abbr -a yconf 'y ~/.config'
 abbr -a ypro 'y ~/Project'

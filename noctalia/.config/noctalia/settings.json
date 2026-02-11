@@ -108,13 +108,23 @@
                     "visualizerType": "linear"
                 },
                 {
-                    "colorizeIcons": false,
-                    "hideMode": "hidden",
-                    "id": "ActiveWindow",
-                    "maxWidth": 145,
-                    "scrollingMode": "hover",
-                    "showIcon": true,
-                    "useFixedWidth": false
+                    "compactMode": false,
+                    "diskPath": "/",
+                    "id": "SystemMonitor",
+                    "showCpuFreq": false,
+                    "showCpuTemp": false,
+                    "showCpuUsage": false,
+                    "showDiskAvailable": false,
+                    "showDiskUsage": false,
+                    "showDiskUsageAsPercent": false,
+                    "showGpuTemp": false,
+                    "showLoadAverage": false,
+                    "showMemoryAsPercent": false,
+                    "showMemoryUsage": false,
+                    "showNetworkStats": true,
+                    "showSwapUsage": false,
+                    "useMonospaceFont": true,
+                    "usePrimaryColor": false
                 }
             ],
             "right": [
@@ -158,7 +168,7 @@
                     "diskPath": "/",
                     "id": "SystemMonitor",
                     "showCpuFreq": false,
-                    "showCpuTemp": true,
+                    "showCpuTemp": false,
                     "showCpuUsage": true,
                     "showDiskAvailable": false,
                     "showDiskUsage": false,
