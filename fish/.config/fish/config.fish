@@ -10,6 +10,7 @@ set -gx GEMINI_API_KEY sk-kBSBKQQHlXHNNzSUVTNdubISw8n0T52rqXnf7xgqdjHEHP6W
 fish_add_path "$HOME/.config/emacs/bin"
 # 添加 npm 全局包路径
 fish_add_path $HOME/.npm-global/bin
+fish_add_path $HOME/.cargo/bin
 # fnm 初始化
 fnm env --use-on-cd --shell fish | source
 
@@ -55,7 +56,7 @@ function poff
 end
 # 路径跳转
 alias cdot='cd ~/dotfiles/'
-alias cc='cd ~/Project/code'
+alias cc='cd ~/code'
 alias cdon='cd ~/Downloads/'
 alias ccon='cd ~/Project/quartz/content'
 alias ch='cd ~'
