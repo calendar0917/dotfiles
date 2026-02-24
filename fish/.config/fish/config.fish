@@ -8,11 +8,17 @@ set -gx GEMINI_API_KEY sk-kBSBKQQHlXHNNzSUVTNdubISw8n0T52rqXnf7xgqdjHEHP6W
 
 # 路径设置
 fish_add_path "$HOME/.config/emacs/bin"
+fish_add_path "$HOME/.emacs.d/bin"
 # 添加 npm 全局包路径
 fish_add_path $HOME/.npm-global/bin
 fish_add_path $HOME/.cargo/bin
 # fnm 初始化
 fnm env --use-on-cd --shell fish | source
+# pnpm
+set -gx PNPM_HOME "/home/calendar/.local/share/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
+end
 
 # Java 环境设置
 set -gx JAVA_TOOL_OPTIONS "-Dsun.java2d.uiScale=2.0 -Dsun.java2d.dpiaware=false"
@@ -58,7 +64,7 @@ end
 alias cdot='cd ~/dotfiles/'
 alias cc='cd ~/code'
 alias cdon='cd ~/Downloads/'
-alias ccon='cd ~/Project/quartz/content'
+alias ccon='cd ~/Documents/quartz/content'
 alias ch='cd ~'
 # pacman
 alias psyu='sudo pacman -Syu'

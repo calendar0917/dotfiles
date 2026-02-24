@@ -6,6 +6,9 @@
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
+workspace "work"
+workspace "web"
+workspace "note"
 cursor {
     //鼠标的光标主题
     xcursor-theme "breeze_cursors"
@@ -119,11 +122,11 @@ input {
     // automatically.
     //position x=0 y=0
 //}
-//-output "HDMI-A-1"{
-    //mode "1920x1080@60"
+output "HDMI-A-1"{
+    //mode "720x480@60"
     //scale 1.75
     //position x=1280 y=0
-//}
+}
 
 layer-rule {
   match namespace="^noctalia-overview*"
