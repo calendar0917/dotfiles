@@ -7,8 +7,6 @@ set -gx GOOGLE_GEMINI_BASE_URL "http://localhost:3000"
 set -gx GEMINI_API_KEY sk-kBSBKQQHlXHNNzSUVTNdubISw8n0T52rqXnf7xgqdjHEHP6W
 
 # 路径设置
-fish_add_path "$HOME/.config/emacs/bin"
-fish_add_path "$HOME/.emacs.d/bin"
 # 添加 npm 全局包路径
 fish_add_path $HOME/.npm-global/bin
 fish_add_path $HOME/.cargo/bin

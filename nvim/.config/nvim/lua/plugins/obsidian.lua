@@ -1,50 +1,68 @@
 return {
-  "epwalsh/obsidian.nvim",
-  version = "*",
-  lazy = true,
-  ft = "markdown",
-  dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
-  keys = {
-    { "<leader>on", "<cmd>ObsidianNew<cr>", desc = "New Obsidian Note" },
-    { "<leader>os", "<cmd>ObsidianSearch<cr>", desc = "Search Obsidian" },
-    { "<leader>ot", "<cmd>ObsidianTemplate<cr>", desc = "Insert Template" },
-    { "<leader>ob", "<cmd>ObsidianBacklinks<cr>", desc = "Show Backlinks" },
-    { "<leader>ox", "<cmd>ObsidianToggleCheckbox<cr>", desc = "Toggle Checkbox" },
-    -- 修复 gf
-    {
-      "gf",
-      function()
-        if require("obsidian").util.cursor_on_markdown_link() then
-          return "<cmd>ObsidianFollowLink<CR>"
-        else
-          return "gf"
-        end
-      end,
-      expr = true,
-      desc = "Follow Link",
-    },
-  },
-  opts = {
-    workspaces = {
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",
+    lazy = true,
+    ft = "markdown",
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+    keys = {
+      { "<leader>on", "<cmd>ObsidianNew<cr>", desc = "New Obsidian Note" },
+      { "<leader>os", "<cmd>ObsidianSearch<cr>", desc = "Search Obsidian" },
+      { "<leader>ot", "<cmd>ObsidianTemplate<cr>", desc = "Insert Template" },
+      { "<leader>ob", "<cmd>ObsidianBacklinks<cr>", desc = "Show Backlinks" },
+      { "<leader>ox", "<cmd>ObsidianToggleCheckbox<cr>", desc = "Toggle Checkbox" },
+      -- 修复 gf
       {
-        name = "personal",
-        path = "~/Project/quartz/content",
+        "gf",
+        function()
+          if require("obsidian").util.cursor_on_markdown_link() then
+            return "<cmd>ObsidianFollowLink<CR>"
+          else
+            return "gf"
+          end
+        end,
+        expr = true,
+        desc = "Follow Link",
       },
     },
-    completion = {
-      nvim_cmp = true,
-      min_chars = 2,
+    opts = {
+      workspaces = {
+        {
+          name = "personal",
+          path = "~/Documents/quartz/content",
+        },
+      },
+      notes_subdir = "未归档",
+      new_notes_location = "notes_subdir",
+      daily_notes = {
+        folder = "00_日志",
+        date_format = "%Y-%m-%d",
+        alias_format = "%Y-%m-%d",
+        default_tags = { "journal" },
+      },
+      templates = {
+        folder = "00_模板",
+        date_format = "%Y-%m-%d",
+        time_format = "%H:%M",
+      },
+      completion = {
+        nvim_cmp = true,
+        min_chars = 2,
+      },
+      -- 解决 No picker configured
+      picker = {
+        name = "telescope.nvim",
+      },
+      -- 界面美化配合
+      ui = {
+        enable = true,
+        update_debounce = 200,
+        checkboxes = {}, -- 可以留空，让 render-markdown 处理
+      },
     },
-    -- 解决 No picker configured
-    picker = {
-      name = "telescope.nvim",
-    },
-    -- 界面美化配合
-    ui = {
-      enable = true,
-      update_debounce = 200,
-      checkboxes = {}, -- 可以留空，让 render-markdown 处理
-    },
+    config = function(_, opts)
+      require("obsidian").setup(opts)
+    end,
   },
   {
     "saghen/blink.cmp",
