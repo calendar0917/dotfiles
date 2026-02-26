@@ -8,3 +8,6 @@ id_ed25519
 .zsh_history
 
 secrets.env
+
+secrets.el
+secrets.*

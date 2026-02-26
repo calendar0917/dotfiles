@@ -54,3 +54,4 @@
 ;; (unpin! t)
 
 (package! sis)
+(package! gptel)

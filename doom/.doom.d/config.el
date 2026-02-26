@@ -28,17 +28,25 @@
 ;; 你可以设置 `doom-theme' 或使用 `load-theme' 函数手动加载主题。
 ;; 这是默认设置：
 
-;; 1. 设置主题 (Doom 自带了多种 tokyo-night 变体)
+;;  主题
 (setq doom-theme 'doom-tokyo-night)
 
-;; 2. 设置 Maple Mono NF CN
+;;  字体 Maple Mono NF CN
 ;; :size 是字号，根据你的屏幕分辨率调整
-(setq doom-font (font-spec :family "Maple Mono NF CN" :size 16 :weight 'regular)
-      doom-variable-pitch-font (font-spec :family "Maple Mono NF CN" :size 15))
+(setq doom-font (font-spec :family "Maple Mono NF CN" :size 22 :weight 'regular)
+      doom-variable-pitch-font (font-spec :family "Maple Mono NF CN" :size 22))
+(defun setup-cjk-font-alignment ()
+  "强制中文字符使用 2:1 的比例对齐。"
+  (when (display-graphic-p)
+    ;; 设定中文（汉字）范围使用的字体
+    (set-fontset-font t 'han (font-spec :family "Maple Mono NF CN"))
+    ;; 设定 CJK 标点符号
+    (set-fontset-font t 'cjk-misc (font-spec :family "Maple Mono NF CN"))))
 
-;; 3. 开启行号 (类似 LazyVim 的相对行号)
-;; 这决定了生效的行号样式。如果设为 `nil'，则禁用行号。
-;; 如需相对行号，请设为 `relative'。
+;; 在字体加载后立即运行
+(add-hook 'after-setting-font-hook #'setup-cjk-font-alignment)
+
+;; 行号
 (setq display-line-numbers-type 'relative)
 
 ;; 如果你使用 `org' 且不想将 org 文件放在下面的默认位置，
@@ -51,18 +59,25 @@
                          "~/org/tickler.org"))
   (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "STRT(s)" "WAIT(w)" "|" "DONE(d)" "KILL(k)")))
+  (after! org
   (setq org-capture-templates
-      '(("t" "Personal todo" entry
-         (file+headline "~/org/inbox.org" "Inbox")
-         "* TODO %?\n%i\n%a" :prepend t)
-        ("n" "Notes" entry
-         (file+headline "~/org/inbox.org" "Notes")
-         "* %?\n%U" :prepend t)))
-  )
+        '(("t" "Personal todo" entry
+           (file+headline "~/org/inbox.org" "Inbox")
+           "* TODO %?\n  :PROPERTIES:\n  :CREATED: %U\n  :LINK: %a\n  :END:\n  %i"
+           :prepend t)
+          ("n" "Notes" entry
+           (file+headline "~/org/inbox.org" "Notes")
+           "* %?\n  :PROPERTIES:\n  :CREATED: %U\n  :END:\n  %i"
+           :prepend t))))  )
 
 (after! org-roam
   (setq org-roam-directory "~/org/notes")
   (org-roam-db-autosync-mode)) ; 自动同步数据库，确保搜索能搜到新笔记
+
+(after! org
+    ;; 给它绑定一个比 SPC n r i 更短的快捷键，或者在 Insert 模式下触发
+  (map! :map org-mode-map
+        :i "C-i" #'org-roam-node-insert)) ; 在插入模式按 Ctrl+l 直接唤起
 
 ;; === 输入法配置 ==
 (use-package! sis
@@ -80,7 +95,40 @@
         sis-other-cursor-color "orange")
 )
 
-;; 每当你重新配置一个包时，确保将配置包裹在 `with-eval-after-load' 块中，
+;; === evil 配置 ===
+(after! evil
+  ;; 确保在 Insert 模式下 C-a 移动到行首，C-e 移动到行尾
+  (setq evil-insert-state-cursor 'bar) ; 顺便把插入模式光标设为竖线，更像传统编辑器
+
+  ;; 绑定常用的 Emacs 移动键到 Evil 的插入模式
+  (define-key evil-insert-state-map (kbd "C-a") #'beginning-of-line)
+  (define-key evil-insert-state-map (kbd "C-e") #'end-of-line)
+  (define-key evil-insert-state-map (kbd "C-n") #'next-line)
+  (define-key evil-insert-state-map (kbd "C-p") #'previous-line)
+  (define-key evil-insert-state-map (kbd "C-f") #'forward-char)
+  (define-key evil-insert-state-map (kbd "C-b") #'backward-char)
+  (define-key evil-insert-state-map (kbd "C-k") #'kill-line)
+  (define-key evil-insert-state-map (kbd "C-d") #'delete-char))
+
+;; === gptel 配置 ===
+;; 1. 确保在配置 gptel 之前加载 Key
+(load! "secrets.el" nil t)
+;;
+(after! gptel
+  ;; 2. 显式定义模型列表（使用字符串，这是 API 真正认的 ID）
+  (let ((my-models '("kimi-k2.5")))
+    ;; 3. 设定默认模型（必须是符号，gptel 会自动匹配上面的字符串）
+    (setq-default gptel-model 'kimi-k2.5)
+    ;; 4. 重新创建并覆盖后端
+    (setq gptel-backend
+          (gptel-make-openai "My-Custom-AI"
+            :host "8.137.38.223:8080"
+            :endpoint "/v1/chat/completions"
+            :protocol "http"
+            :stream t
+            :key gptel-api-key  ; 假设你在 secrets.el 里定义了这个变量
+            :models '(kimi-k2.5)))) ; 注入模型列表;; 每当你重新配置一个包时，确保将配置包裹在 `with-eval-after-load' 块中，
+
 ;; 否则 Doom 的默认设置可能会覆盖你的配置。例如：
 ;;
 ;;   (with-eval-after-load 'PACKAGE
