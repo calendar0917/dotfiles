@@ -55,3 +55,4 @@
 
 (package! sis)
 (package! gptel)
+(package! olivetti)

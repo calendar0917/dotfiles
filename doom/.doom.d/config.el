@@ -56,19 +56,20 @@
   (setq org-directory "~/org/")
   (setq org-agenda-files '("~/org/inbox.org"
                          "~/org/projects.org"
-                         "~/org/tickler.org"))
+                         "~/org/todo.org"))
   (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "STRT(s)" "WAIT(w)" "|" "DONE(d)" "KILL(k)")))
   (after! org
   (setq org-capture-templates
         '(("t" "Personal todo" entry
-           (file+headline "~/org/inbox.org" "Inbox")
+           (file+headline "~/org/todo.org" "Inbox")
            "* TODO %?\n  :PROPERTIES:\n  :CREATED: %U\n  :LINK: %a\n  :END:\n  %i"
            :prepend t)
           ("n" "Notes" entry
            (file+headline "~/org/inbox.org" "Notes")
            "* %?\n  :PROPERTIES:\n  :CREATED: %U\n  :END:\n  %i"
-           :prepend t))))  )
+           :prepend t)))
+  (setq org-log-done 'time))  )
 
 (after! org-roam
   (setq org-roam-directory "~/org/notes")
@@ -78,6 +79,13 @@
     ;; 给它绑定一个比 SPC n r i 更短的快捷键，或者在 Insert 模式下触发
   (map! :map org-mode-map
         :i "C-i" #'org-roam-node-insert)) ; 在插入模式按 Ctrl+l 直接唤起
+
+;; Babel 执行
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)
+   (shell . t)
+   (emacs-lisp . t)))
 
 ;; === 输入法配置 ==
 (use-package! sis
@@ -128,6 +136,11 @@
             :stream t
             :key gptel-api-key  ; 假设你在 secrets.el 里定义了这个变量
             :models '(kimi-k2.5)))) ; 注入模型列表;; 每当你重新配置一个包时，确保将配置包裹在 `with-eval-after-load' 块中，
+
+  ;; === 文字居中显示 ===
+  (use-package! olivetti
+  :config
+  (setq olivetti-body-width 60%)) ; 设置文字区域的宽度，可以是数字或百分比
 
 ;; 否则 Doom 的默认设置可能会覆盖你的配置。例如：
 ;;

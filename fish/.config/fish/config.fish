@@ -10,6 +10,7 @@ set -gx GEMINI_API_KEY sk-kBSBKQQHlXHNNzSUVTNdubISw8n0T52rqXnf7xgqdjHEHP6W
 # 添加 npm 全局包路径
 fish_add_path $HOME/.npm-global/bin
 fish_add_path $HOME/.cargo/bin
+fish_add_path $HOME/go/bin
 # fnm 初始化
 fnm env --use-on-cd --shell fish | source
 # pnpm

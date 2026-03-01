@@ -122,11 +122,6 @@ input {
     // automatically.
     //position x=0 y=0
 //}
-output "HDMI-A-1"{
-    //mode "720x480@60"
-    //scale 1.75
-    //position x=1280 y=0
-}
 
 layer-rule {
   match namespace="^noctalia-overview*"

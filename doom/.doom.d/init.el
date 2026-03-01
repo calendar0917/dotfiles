@@ -47,7 +47,7 @@
        vi-tilde-fringe   ; 用边缘波浪号标记文件末尾之后
        ;;window-select     ; 可视化切换窗口
        workspaces        ; 标签页模拟、持久化和独立工作区
-       ;;zen               ; 无干扰的编程或写作
+       zen               ; 无干扰的编程或写作
 
        :editor
        (evil +everywhere); 加入黑暗面，我们有饼干
