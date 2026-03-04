@@ -58,8 +58,7 @@
                          "~/org/projects.org"
                          "~/org/todo.org"))
   (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "STRT(s)" "WAIT(w)" "|" "DONE(d)" "KILL(k)")))
-  (after! org
+      '((sequence "TODO(t)" "NEXT(n)" "STRT(s)" "WAIT(w)" "|" "DONE(d)")))
   (setq org-capture-templates
         '(("t" "Personal todo" entry
            (file+headline "~/org/todo.org" "Inbox")
@@ -69,7 +68,9 @@
            (file+headline "~/org/inbox.org" "Notes")
            "* %?\n  :PROPERTIES:\n  :CREATED: %U\n  :END:\n  %i"
            :prepend t)))
-  (setq org-log-done 'time))  )
+  (setq org-log-done 'time)
+  (map! :nv "j" #'evil-next-visual-line
+        :nv "k" #'evil-previous-visual-line))
 
 (after! org-roam
   (setq org-roam-directory "~/org/notes")
@@ -86,6 +87,15 @@
  '((python . t)
    (shell . t)
    (emacs-lisp . t)))
+
+;; 美化
+(after! org
+  (setq org-modern-timestamp nil))  ; 禁用日期美化，保证对齐
+
+;; org 计算
+(add-hook 'org-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook #'org-table-recalculate-all t t)))
 
 ;; === 输入法配置 ==
 (use-package! sis
@@ -140,7 +150,28 @@
   ;; === 文字居中显示 ===
   (use-package! olivetti
   :config
-  (setq olivetti-body-width 60%)) ; 设置文字区域的宽度，可以是数字或百分比
+  (setq olivetti-body-width 0.5)) ; 设置文字区域的宽度，可以是数字或百分比
+
+  ;; === 代码补全配置 ===
+;; 增强 Vertico
+(after! vertico
+  (setq vertico-cycle t))           ; 列表循环滚动
+
+(after! corfu
+  (setq corfu-auto t
+        corfu-auto-delay 0.02
+        corfu-auto-prefix 1)
+
+  ;; 核心：融合补全后端
+  (defun my/setup-corfu-capfs ()
+    (setq-local completion-at-point-functions
+                (list (cape-capf-super
+                       #'eglot-completion-at-point  ; LSP 补全
+                       #'tempel-expand              ; 代码片段 (如果你用 tempel)
+                       #'cape-file                  ; 文件路径
+                       #'cape-dabbrev))))           ; 当前所有 buffer 里的单词
+
+  (add-hook 'go-mode-hook #'my/setup-corfu-capfs))
 
 ;; 否则 Doom 的默认设置可能会覆盖你的配置。例如：
 ;;

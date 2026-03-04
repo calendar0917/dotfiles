@@ -1,0 +1,11 @@
+[Unit]
+Description=Noctalia Shell for niri
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/qs -c noctalia-shell
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Kanshi output manager
+After=wayland-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kanshi
+Restart=always
+
+[Install]
+WantedBy=default.target

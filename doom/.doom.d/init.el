@@ -54,6 +54,7 @@
        file-templates    ; 空文件的自动代码片段
        fold              ; （几乎）通用的代码折叠
        ;;god               ; 无需修饰键即可运行 Emacs 命令
+       ;;
        ;;lispy             ; 给不喜欢 vim 的人用的 lisp 版 vim
        ;;multiple-cursors  ; 同时在多处编辑
        ;;objed             ; 为单纯者提供的文本对象编辑
@@ -113,7 +114,7 @@
        ;;ada               ; 我们（盲目地）信任强类型
        ;;agda              ; 类型的类型的类型的类型...
        ;;beancount         ; 注意 GAAP（一般公认会计原则）
-       ;;(cc +lsp)         ; C 大于 C++ 等于 1
+       (cc +lsp)         ; C 大于 C++ 等于 1
        ;;clojure           ; 带 lisp 的 java
        ;;common-lisp       ; 如果你见过一种 lisp，你就见过它们所有
        ;;coq               ; 证明即程序
@@ -133,7 +134,7 @@
        ;;fsharp            ; ML 代表微软的语言（误）
        ;;fstar             ; （依赖）类型和（单子）效应和 Z3
        ;;gdscript          ; 你等待的语言
-       ;;(go +lsp)         ; 潮人方言
+       (go +lsp)         ; 潮人方言
        ;;(graphql +lsp)    ; 让查询休息一下（双关：REST）
        ;;(haskell +lsp)    ; 比我更懒的语言
        ;;hy                ; scheme 的可读性 + python 的速度

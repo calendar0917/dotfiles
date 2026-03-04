@@ -304,7 +304,8 @@ spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "clipse --listen"
 spawn-at-startup "nm-applet"
 spawn-sh-at-startup "wl-paste --watch cliphist store"
-spawn-at-startup "qs" "-c" "noctalia-shell" // Noctalia 统一桌面
+spawn-at-startup "systemctl" "--user" "restart" "noctalia.service"
+// spawn-at-startup "qs" "-c" "noctalia-shell" // Noctalia 统一桌面
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
