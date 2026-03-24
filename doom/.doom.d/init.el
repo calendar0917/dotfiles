@@ -165,7 +165,7 @@
        ;;rest              ; Emacs 作为 REST 客户端
        ;;rst               ; 安息吧（双关：ReStructuredText）
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       ;;(rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()（不断解包）
+       (rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()（不断解包）
        ;;scala             ; java，但是好
        ;;(scheme +guile)   ; 一个完全密谋的 lisp 家族
        sh                ; 她在 C 异或上卖 {ba,z,fi}sh 壳（双关：海贝壳）

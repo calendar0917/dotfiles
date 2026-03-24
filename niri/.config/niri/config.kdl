@@ -304,6 +304,7 @@ spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "clipse --listen"
 spawn-at-startup "nm-applet"
 spawn-sh-at-startup "wl-paste --watch cliphist store"
+spawn-at-startup "sh" "-c" "systemctl --user stop kanshi; sleep 1; systemctl --user start kanshi"
 spawn-at-startup "systemctl" "--user" "restart" "noctalia.service"
 // spawn-at-startup "qs" "-c" "noctalia-shell" // Noctalia 统一桌面
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
@@ -439,6 +440,9 @@ binds {
     Alt+Shift+L { 
         spawn "qs" "-c" "noctalia-shell" "ipc" "call" "sessionMenu" "lockAndSuspend"; 
     }
+    // 急救键，重启 noctalia
+    Mod+Shift+Escape { spawn "sh" "-c" "systemctl --user restart noctalia.service; pkill waypaper; waypaper"; }
+
     Mod+E {spawn "thunar";}
     Mod+P { spawn-sh "niri msg output eDP-1 off"; }
     // Super + Alt + I: 启用内置显示器
