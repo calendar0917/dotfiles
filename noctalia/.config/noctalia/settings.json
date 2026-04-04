@@ -451,7 +451,7 @@
         "firstDayOfWeek": 1,
         "hideWeatherCityName": false,
         "hideWeatherTimezone": false,
-        "name": "Xiamen",
+        "name": "Chengdu",
         "showCalendarEvents": true,
         "showCalendarWeather": true,
         "showWeekNumberInCalendar": false,
@@ -632,7 +632,7 @@
     },
     "wallpaper": {
         "automationEnabled": false,
-        "directory": "/home/calendar/Pictures/background",
+        "directory": "/home/calendar/dotfiles",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
         "favorites": [
@@ -657,7 +657,7 @@
         "transitionType": "random",
         "useSolidColor": false,
         "useWallhaven": false,
-        "viewMode": "recursive",
+        "viewMode": "browse",
         "wallhavenApiKey": "",
         "wallhavenCategories": "111",
         "wallhavenOrder": "desc",

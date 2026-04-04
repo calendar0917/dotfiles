@@ -113,7 +113,7 @@
        :lang
        ;;ada               ; 我们（盲目地）信任强类型
        ;;agda              ; 类型的类型的类型的类型...
-       ;;beancount         ; 注意 GAAP（一般公认会计原则）
+       beancount         ; 注意 GAAP（一般公认会计原则）
        (cc +lsp)         ; C 大于 C++ 等于 1
        ;;clojure           ; 带 lisp 的 java
        ;;common-lisp       ; 如果你见过一种 lisp，你就见过它们所有
