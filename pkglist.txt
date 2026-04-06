@@ -48,7 +48,7 @@ libkeybinder3
 libvirt
 linux
 linux-firmware
-neovim
+man-db
 networkmanager
 ninja
 niri

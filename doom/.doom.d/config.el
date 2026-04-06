@@ -69,8 +69,14 @@
            "* %?\n  :PROPERTIES:\n  :CREATED: %U\n  :END:\n  %i"
            :prepend t)))
   (setq org-log-done 'time)
+  (setq org-pretty-entities t)      ; 把 \alpha 显示成 α，把 \to 显示成 \to
+  (setq org-use-sub-superscripts t)  ; 开启上下标支持
+  (setq org-preview-latex-default-process 'dvisvgm)
   (map! :nv "j" #'evil-next-visual-line
         :nv "k" #'evil-previous-visual-line))
+
+(use-package! org-fragtog
+  :hook (org-mode . org-fragtog-mode))
 
 (after! org-roam
   (setq org-roam-directory "~/org/notes")

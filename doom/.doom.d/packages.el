@@ -56,3 +56,4 @@
 (package! sis)
 (package! gptel)
 (package! olivetti)
+(package! org-fragtog)
