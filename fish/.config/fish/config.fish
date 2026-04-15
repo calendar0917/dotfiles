@@ -94,3 +94,10 @@ function y
     end
     rm -f -- "$tmp"
 end
+
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba shell init' !!
+set -gx MAMBA_EXE "/home/calendar/miniforge3/bin/mamba"
+set -gx MAMBA_ROOT_PREFIX "/home/calendar/miniforge3"
+$MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
+# <<< mamba initialize <<<
