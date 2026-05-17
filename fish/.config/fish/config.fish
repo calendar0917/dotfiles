@@ -72,6 +72,7 @@ alias ask="aichat -m deepseek:deepseek-chat -- --stram true --role assistant -e"
 alias chat="aichat -m deepseek:deepseek-chat --role assistant"
 alias think="aichat -m deepseek:deepseek-reasoner"
 
+abbr ttui='taskwarrior-tui'
 abbr -a ydon 'y ~/Downloads'
 abbr -a yconf 'y ~/.config'
 abbr -a ypro 'y ~/Project'
@@ -97,7 +98,7 @@ end
 
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba shell init' !!
-set -gx MAMBA_EXE "/home/calendar/miniforge3/bin/mamba"
-set -gx MAMBA_ROOT_PREFIX "/home/calendar/miniforge3"
+set -gx MAMBA_EXE /home/calendar/miniforge3/bin/mamba
+set -gx MAMBA_ROOT_PREFIX /home/calendar/miniforge3
 $MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
 # <<< mamba initialize <<<

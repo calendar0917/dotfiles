@@ -59,6 +59,7 @@
                          "~/org/todo.org"))
   (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n)" "STRT(s)" "WAIT(w)" "|" "DONE(d)")))
+  (setq org-startup-folded t)
   (setq org-capture-templates
         '(("t" "Personal todo" entry
            (file+headline "~/org/todo.org" "Inbox")
@@ -136,13 +137,13 @@
 
 ;; === gptel 配置 ===
 ;; 1. 确保在配置 gptel 之前加载 Key
-(load! "secrets.el" nil t)
+(load! "secrets.el")
 ;;
 (after! gptel
   ;; 2. 显式定义模型列表（使用字符串，这是 API 真正认的 ID）
-  (let ((my-models '("kimi-k2.5")))
+  (let ((my-models '("glm-5")))
     ;; 3. 设定默认模型（必须是符号，gptel 会自动匹配上面的字符串）
-    (setq-default gptel-model 'kimi-k2.5)
+    (setq-default gptel-model 'glm-5)
     ;; 4. 重新创建并覆盖后端
     (setq gptel-backend
           (gptel-make-openai "My-Custom-AI"
@@ -151,7 +152,7 @@
             :protocol "http"
             :stream t
             :key gptel-api-key  ; 假设你在 secrets.el 里定义了这个变量
-            :models '(kimi-k2.5)))) ; 注入模型列表;; 每当你重新配置一个包时，确保将配置包裹在 `with-eval-after-load' 块中，
+            :models '(glm-5)))) ; 注入模型列表;; 每当你重新配置一个包时，确保将配置包裹在 `with-eval-after-load' 块中，
 
   ;; === 文字居中显示 ===
   (use-package! olivetti
