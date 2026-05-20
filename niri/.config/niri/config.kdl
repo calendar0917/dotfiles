@@ -305,7 +305,7 @@ spawn-sh-at-startup "clipse --listen"
 spawn-at-startup "nm-applet"
 spawn-sh-at-startup "wl-paste --watch cliphist store"
 spawn-at-startup "sh" "-c" "systemctl --user stop kanshi; sleep 1; systemctl --user start kanshi"
-spawn-at-startup "systemctl" "--user" "restart" "noctalia.service"
+// spawn-at-startup "systemctl" "--user" "restart" "noctalia.service"
 // spawn-at-startup "qs" "-c" "noctalia-shell" // Noctalia 统一桌面
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -432,16 +432,16 @@ binds {
     // shows a list of important hotkeys.
     // 自定义
     // 1. Alt + L: 仅锁屏 
-    Alt+L { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "lockScreen" "lock";}
+    // Alt+L { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "lockScreen" "lock";}
     //Alt+L { spawn "swaylock" "-f" "-i" "/home/calendar/Pictures/background/壁纸.jpg" "-s" "fill"; }
 
     // 2. Alt + Shift + L: 锁屏并睡眠 
     // 使用 spawn-sh 来执行 shell 命令链
-    Alt+Shift+L { 
-        spawn "qs" "-c" "noctalia-shell" "ipc" "call" "sessionMenu" "lockAndSuspend"; 
-    }
+    //Alt+Shift+L { 
+    //    spawn "qs" "-c" "noctalia-shell" "ipc" "call" "sessionMenu" "lockAndSuspend"; 
+    //}
     // 急救键，重启 noctalia
-    Mod+Shift+Escape { spawn "sh" "-c" "systemctl --user restart noctalia.service; pkill waypaper; waypaper"; }
+    // Mod+Shift+Escape { spawn "sh" "-c" "systemctl --user restart noctalia.service; pkill waypaper; waypaper"; }
 
     Mod+E {spawn "thunar";}
     Mod+P { spawn-sh "niri msg output eDP-1 off"; }
@@ -459,9 +459,9 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "kitty"; }
-    Mod+D hotkey-overlay-title="Run an Application: Noctalia" { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
+    // Mod+D hotkey-overlay-title="Run an Application: Noctalia" { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen:swaylock" { spawn "swaylock"; }
-    Mod+S { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "controlCenter" "toggle"; }
+    // Mod+S { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "controlCenter" "toggle"; }
     //Mod+Comma { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "settings" "toggle"; }
 
     // Audio & Brightness
@@ -731,3 +731,8 @@ environment {
     LANG "en_US.UTF-8"
     LC_MESSAGES "zh_CN.UTF-8"
 }
+
+include "dms/colors.kdl"
+include "dms/layout.kdl"
+include "dms/alttab.kdl"
+include "dms/binds.kdl"

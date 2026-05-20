@@ -6,6 +6,9 @@
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
+workspace "work"
+workspace "web"
+workspace "note"
 cursor {
     //鼠标的光标主题
     xcursor-theme "breeze_cursors"
@@ -119,12 +122,11 @@ input {
     // automatically.
     //position x=0 y=0
 //}
-//-output "HDMI-A-1"{
-    //mode "1920x1080@60"
-    //scale 1.75
-    //position x=1280 y=0
-//}
 
+layer-rule {
+  match namespace="^noctalia-overview*"
+  place-within-backdrop true
+}
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Layout
@@ -208,6 +210,15 @@ layout {
         // To do that, set relative-to="workspace-view".
         //
         // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+
+        // By default, focus rings are drawn behind windows (so they show through
+        // semitransparent windows). For opaque windows, you might prefer drawing
+        // them around the window instead.
+        //
+        // Note: This setting only applies to windows that use client-side decorations
+        // (CSD), which most applications do. If you enable prefer-no-csd below, or
+        // the window explicitly asks to use no CSD, then focus rings are always drawn
+        // around the window regardless of this setting.
     }
 
     // You can also add a border. It's similar to the focus ring, but always visible.
@@ -250,7 +261,7 @@ layout {
         // window. These will also remove client-side shadows if the window
         // draws any.
         //
-        // draw-behind-window true
+        draw-behind-window true
 
         // You can change how shadows look. The values below are in logical
         // pixels and match the CSS box-shadow properties.
@@ -287,17 +298,15 @@ layout {
 // See the binds section below for more spawn examples.
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
-spawn-at-startup "waybar"
+// spawn-at-startup "waybar"
 spawn-at-startup "fcitx5" "-d" "--replace"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-sh-at-startup "clipse --listen"
-spawn-at-startup "swww-daemon"
 spawn-at-startup "nm-applet"
 spawn-sh-at-startup "wl-paste --watch cliphist store"
-spawn-at-startup "~/dotfiles/script/clip-bridge.py"
-spawn-at-startup "mako"
-spawn-at-startup "pkill kanshi; kanshi"
-spawn-at-startup "~/.config/niri/scripts/swayidle.sh"
+spawn-at-startup "sh" "-c" "systemctl --user stop kanshi; sleep 1; systemctl --user start kanshi"
+spawn-at-startup "systemctl" "--user" "restart" "noctalia.service"
+// spawn-at-startup "qs" "-c" "noctalia-shell" // Noctalia 统一桌面
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
@@ -308,10 +317,10 @@ hotkey-overlay {
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
-// Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
-// This option will also fix border/focus ring drawing behind some semitransparent windows.
-// After enabling or disabling this, you need to restart the apps for this to take effect.
-// prefer-no-csd
+    // Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
+    // This option will also fix border/focus ring drawing behind some semitransparent windows.
+    // After enabling or disabling this, you need to restart the apps for this to take effect.
+    prefer-no-csd
 
 // You can change the path where screenshots are saved.
 // A ~ at the front will be expanded to the home directory.
@@ -390,22 +399,23 @@ window-rule {
 }
 
 // Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
-/-window-rule {
-    geometry-corner-radius 12
-    clip-to-geometry true
-}
+    // (This example rule is commented out with a "/-" in front.)
+    /-window-rule {
+        geometry-corner-radius 12
+        clip-to-geometry true
+    }
 
-window-rule {
-    //圆角
-    geometry-corner-radius 5
-    //剪掉圆角外的窗口内容
-    clip-to-geometry true
-    //透明度
-    opacity 1.00
-    //禁止边框画到窗口后面
-    draw-border-with-background false
-}
+    window-rule {
+        match app-id="kitty"
+        draw-border-with-background false
+    }
+
+    window-rule {
+        //圆角
+        geometry-corner-radius 5
+        //剪掉圆角外的窗口内容
+        clip-to-geometry true
+    }
 
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
@@ -422,13 +432,17 @@ binds {
     // shows a list of important hotkeys.
     // 自定义
     // 1. Alt + L: 仅锁屏 
-    Alt+L { spawn "swaylock" "-f" "-i" "/home/calendar/Pictures/background/壁纸.jpg" "-s" "fill"; }
+    Alt+L { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "lockScreen" "lock";}
+    //Alt+L { spawn "swaylock" "-f" "-i" "/home/calendar/Pictures/background/壁纸.jpg" "-s" "fill"; }
 
     // 2. Alt + Shift + L: 锁屏并睡眠 
     // 使用 spawn-sh 来执行 shell 命令链
     Alt+Shift+L { 
-        spawn-sh "swaylock -f -i /home/calendar/Pictures/background/壁纸.jpg -s fill && sleep 0.5 && systemctl suspend"; 
+        spawn "qs" "-c" "noctalia-shell" "ipc" "call" "sessionMenu" "lockAndSuspend"; 
     }
+    // 急救键，重启 noctalia
+    Mod+Shift+Escape { spawn "sh" "-c" "systemctl --user restart noctalia.service; pkill waypaper; waypaper"; }
+
     Mod+E {spawn "thunar";}
     Mod+P { spawn-sh "niri msg output eDP-1 off"; }
     // Super + Alt + I: 启用内置显示器
@@ -439,14 +453,23 @@ binds {
     Mod+Shift+P {spawn-sh "pkill waybar || true && waybar";}
     Mod+Shift+Slash { show-hotkey-overlay; }
     // Ctrl + 1 进行录屏
-    Ctrl+1 {
-        spawn "sh" "-c" "if pgrep wl-screenrec; then killall -s SIGINT wl-screenrec && notify-send '录屏已停止' '视频已保存'; else wl-screenrec -g \"$(slurp)\" -f /home/calendar/Downloads/录屏_$(date +%Y-%m-%d_%H-%M-%S).mp4; fi"
-    }
+    //Ctrl+1 {
+    //    spawn "sh" "-c" "if pgrep wl-screenrec; then killall -s SIGINT wl-screenrec && notify-send '录屏已停止' '视频已保存'; else wl-screenrec -g \"$(slurp)\" -f /home/calendar/Downloads/录屏_$(date +%Y-%m-%d_%H-%M-%S).mp4; fi"
+    //}
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "kitty"; }
-    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Mod+D hotkey-overlay-title="Run an Application: Noctalia" { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen:swaylock" { spawn "swaylock"; }
+    Mod+S { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "controlCenter" "toggle"; }
+    //Mod+Comma { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "settings" "toggle"; }
+
+    // Audio & Brightness
+    //XF86AudioRaiseVolume { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "increase"; }
+    //XF86AudioLowerVolume { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "decrease"; }
+    //XF86AudioMute { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "volume" "muteOutput"; }
+    //XF86MonBrightnessUp { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "brightness" "increase"; }
+    //XF86MonBrightnessDown { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "brightness" "decrease"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -544,8 +567,8 @@ binds {
     Mod+u              { focus-workspace-up; }
     Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
     Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
-    Mod+Shift+U         { move-column-to-workspace-down; }
-    Mod+Shift+I         { move-column-to-workspace-up; }
+    Mod+Shift+N         { move-column-to-workspace-down; }
+    Mod+Shift+U         { move-column-to-workspace-up; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }

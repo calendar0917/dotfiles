@@ -72,7 +72,7 @@ alias ask="aichat -m deepseek:deepseek-chat -- --stram true --role assistant -e"
 alias chat="aichat -m deepseek:deepseek-chat --role assistant"
 alias think="aichat -m deepseek:deepseek-reasoner"
 
-abbr ttui='taskwarrior-tui'
+abbr -a ttui taskwarrior-tui
 abbr -a ydon 'y ~/Downloads'
 abbr -a yconf 'y ~/.config'
 abbr -a ypro 'y ~/Project'
