@@ -9,11 +9,11 @@ binds {
         spawn "dms" "ipc" "call" "settings" "toggle";
     }
     // 锁屏
-    Mod+L hotkey-overlay-title="Lock Screen" {
+    Alt+L hotkey-overlay-title="Lock Screen" {
         spawn "dms" "ipc" "call" "lock" "lock";
     }
     // 电源菜单 (包含睡眠)
-    Mod+Shift+L hotkey-overlay-title="Power Menu" {
+    Alt+Shift+L hotkey-overlay-title="Power Menu" {
         spawn "dms" "ipc" "call" "powermenu" "toggle";
     }
     Mod+Shift+V hotkey-overlay-title="Clipboard Manager" {
