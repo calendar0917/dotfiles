@@ -51,15 +51,35 @@ else
     log "安装完成: $(xray version | head -1)"
 fi
 
+# ---- 修复 systemd User=nobody 警告 ----
+SERVICE_FILE=/etc/systemd/system/xray.service
+if [ -f "$SERVICE_FILE" ] && grep -q 'User=nobody' "$SERVICE_FILE"; then
+    log "修复 systemd 单元 (nobody -> xray 用户)..."
+    if ! id xray &>/dev/null; then
+        useradd -r -d /var/lib/xray -s /usr/sbin/nologin xray 2>/dev/null || true
+    fi
+    sed -i 's/User=nobody/User=xray/' "$SERVICE_FILE"
+    systemctl daemon-reload
+    log "systemd 单元已修复"
+fi
+
 # ============================================================
 # Step 3: 生成密钥和 UUID
 # ============================================================
 info "Step 3/6: 生成 Reality 密钥和 UUID"
 
 log "生成 x25519 密钥对..."
-KEYS=$(xray x25519)
-PRIVATE_KEY=$(echo "$KEYS" | awk '/Private key:/{print $3}')
-PUBLIC_KEY=$(echo "$KEYS"  | awk '/Public key:/{print $3}')
+# xray 可能输出到 stdout 或 stderr，统一捕获
+KEYS=$(xray x25519 2>&1)
+# 用 sed 正则提取, 比 awk 更健壮 (兼容行首可能的日志前缀)
+PRIVATE_KEY=$(echo "$KEYS" | sed -n 's/^.*Private key: *//p')
+PUBLIC_KEY=$(echo "$KEYS"  | sed -n 's/^.*Public key: *//p')
+
+if [[ -z "$PRIVATE_KEY" ]] || [[ -z "$PUBLIC_KEY" ]]; then
+    err "密钥提取失败，xray x25519 原始输出:"
+    echo "$KEYS"
+    exit 1
+fi
 
 log "私钥: $PRIVATE_KEY"
 log "公钥: $PUBLIC_KEY"
