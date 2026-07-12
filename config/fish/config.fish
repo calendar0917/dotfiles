@@ -56,7 +56,7 @@ function poff
     echo 终端代理已关闭
 end
 # 路径跳转
-alias cdot='cd ~/infra/nixos/dotfiles'
+alias cdot='cd ~/dotfiles'
 alias cc='cd ~/code'
 alias cdon='cd ~/Downloads/'
 alias ccon='cd ~/Documents/quartz/content'
@@ -72,6 +72,7 @@ alias ask="aichat -m deepseek:deepseek-chat -- --stram true --role assistant -e"
 alias chat="aichat -m deepseek:deepseek-chat --role assistant"
 alias think="aichat -m deepseek:deepseek-reasoner"
 
+abbr -a sps 'sudo pacman -S'
 abbr -a ttui taskwarrior-tui
 abbr -a ydon 'y ~/Downloads'
 abbr -a yconf 'y ~/.config'
