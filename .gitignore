@@ -11,3 +11,6 @@ secrets.env
 
 secrets.el
 secrets.*
+
+# nvim
+config/nvim/lazy-lock.json
