@@ -74,8 +74,8 @@ log "生成 x25519 密钥对..."
 #   Password (PublicKey): xxxxx
 #   Hash32: xxxxx      (忽略)
 KEYS=$(xray x25519 2>&1)
-PRIVATE_KEY=$(echo "$KEYS" | grep -oP 'PrivateKey:\s*\K\S+')
-PUBLIC_KEY=$(echo "$KEYS"  | grep -oP 'PublicKey\):\s*\K\S+')
+PRIVATE_KEY=$(echo "$KEYS" | awk -F': *' '/^PrivateKey:/{print $2}')
+PUBLIC_KEY=$(echo "$KEYS"  | awk -F': *' '/PublicKey\)/{print $2}')
 
 if [[ -z "$PRIVATE_KEY" ]] || [[ -z "$PUBLIC_KEY" ]]; then
     err "密钥提取失败，xray x25519 原始输出:"
