@@ -69,11 +69,13 @@ fi
 info "Step 3/6: 生成 Reality 密钥和 UUID"
 
 log "生成 x25519 密钥对..."
-# xray 可能输出到 stdout 或 stderr，统一捕获
+# 实际输出格式:
+#   PrivateKey: xxxxx
+#   Password (PublicKey): xxxxx
+#   Hash32: xxxxx      (忽略)
 KEYS=$(xray x25519 2>&1)
-# 用 sed 正则提取, 比 awk 更健壮 (兼容行首可能的日志前缀)
-PRIVATE_KEY=$(echo "$KEYS" | sed -n 's/^.*Private key: *//p')
-PUBLIC_KEY=$(echo "$KEYS"  | sed -n 's/^.*Public key: *//p')
+PRIVATE_KEY=$(echo "$KEYS" | grep -oP 'PrivateKey:\s*\K\S+')
+PUBLIC_KEY=$(echo "$KEYS"  | grep -oP 'PublicKey\):\s*\K\S+')
 
 if [[ -z "$PRIVATE_KEY" ]] || [[ -z "$PUBLIC_KEY" ]]; then
     err "密钥提取失败，xray x25519 原始输出:"
