@@ -82,6 +82,7 @@ abbr -a ycon 'y ~/Project/quartz/content'
 abbr -a ga 'git add .'
 abbr -a gm 'git commit -m'
 abbr -a gp 'git push'
+abbr -a gc 'git clone'
 
 if status is-interactive
     # 禁用 Fish 默认的问候语
