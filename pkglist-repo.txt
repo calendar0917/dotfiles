@@ -4,6 +4,7 @@ amd-ucode
 archlinuxcn-keyring
 base
 base-devel
+blueman
 bluez
 bluez-obex
 bluez-utils
@@ -11,10 +12,12 @@ btop
 btrfs-progs
 cava
 clang
+clash-verge-rev
 cmake
 direnv
 dms-shell-niri
 docker
+docker-buildx
 docker-compose
 efibootmgr
 fastfetch
@@ -37,6 +40,7 @@ kanshi
 keyd
 kitty
 lazygit
+less
 linux-firmware
 linux-lts
 matugen
@@ -49,13 +53,18 @@ noto-fonts-emoji
 noto-fonts-extra
 npm
 ntfs-3g
+obs-studio
 obsidian
+openbsd-netcat
 opencode
 os-prober
 python-pip
 qt6-multimedia-ffmpeg
+rsync
 stow
 tailscale
+task
+taskwarrior-tui
 tmux
 tree
 unzip

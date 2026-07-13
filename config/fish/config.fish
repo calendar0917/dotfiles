@@ -83,6 +83,9 @@ abbr -a ga 'git add .'
 abbr -a gm 'git commit -m'
 abbr -a gp 'git push'
 abbr -a gc 'git clone'
+# 脚本
+abbr -a update '/home/calendar/dotfiles/scripts/update-packages.sh'
+abbr -a clean '/home/calendar/dotfiles/scripts/cleanup.sh'
 
 if status is-interactive
     # 禁用 Fish 默认的问候语
