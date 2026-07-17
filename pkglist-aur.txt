@@ -1,1 +1,4 @@
+burpsuite
+clash-verge-rev-bin
 google-chrome
+wemeet-bin

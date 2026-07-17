@@ -12,7 +12,6 @@ btop
 btrfs-progs
 cava
 clang
-clash-verge-rev
 cmake
 direnv
 dms-shell-niri
@@ -20,6 +19,7 @@ docker
 docker-buildx
 docker-compose
 efibootmgr
+ex-vi-compat
 fastfetch
 fcitx5
 fcitx5-chinese-addons
@@ -30,6 +30,7 @@ fd
 firefox
 fish
 flatpak
+freerdp
 fzf
 git
 github-cli
@@ -41,6 +42,7 @@ keyd
 kitty
 lazygit
 less
+libreoffice-still
 linux-firmware
 linux-lts
 matugen
@@ -58,9 +60,15 @@ obsidian
 openbsd-netcat
 opencode
 os-prober
+pass
+pass-otp
+pipewire-alsa
+pipewire-pulse
 python-pip
 qt6-multimedia-ffmpeg
 rsync
+rtkit
+slurp
 stow
 tailscale
 task
@@ -68,7 +76,7 @@ taskwarrior-tui
 tmux
 tree
 unzip
-v2raya
+uv
 wget
 wl-clipboard
 xdg-desktop-portal-gnome
