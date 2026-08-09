@@ -11,6 +11,7 @@ bluez-utils
 btop
 btrfs-progs
 cava
+cc-switch
 clang
 cmake
 direnv
@@ -35,6 +36,7 @@ fzf
 git
 github-cli
 go
+grok-build-git
 grub
 jq
 kanshi
@@ -57,15 +59,19 @@ npm
 ntfs-3g
 obs-studio
 obsidian
+openai-codex
 openbsd-netcat
 opencode
 os-prober
+pandoc-bin
 pass
 pass-otp
 pipewire-alsa
 pipewire-pulse
 python-pip
 qt6-multimedia-ffmpeg
+reflector
+rocm-hip-sdk
 rsync
 rtkit
 slurp
@@ -81,6 +87,8 @@ wget
 wl-clipboard
 xdg-desktop-portal-gnome
 xdg-desktop-portal-gtk
+xdg-desktop-portal-wlr
 xwayland-satellite
 yay
+yazi
 zoxide

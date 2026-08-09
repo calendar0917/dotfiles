@@ -1,4 +1,8 @@
-burpsuite
+appimagelauncher
 clash-verge-rev-bin
+claude-code
 google-chrome
+miniconda3
+pass-import
+pi
 wemeet-bin

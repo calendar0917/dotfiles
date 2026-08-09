@@ -74,15 +74,19 @@ alias think="aichat -m deepseek:deepseek-reasoner"
 
 abbr -a sps 'sudo pacman -S'
 abbr -a ttui taskwarrior-tui
+# yazi
 abbr -a ydon 'y ~/Downloads'
 abbr -a yconf 'y ~/.config'
 abbr -a ypro 'y ~/Project'
 abbr -a yc 'y ~/Project/code/'
 abbr -a ycon 'y ~/Project/quartz/content'
+# git
 abbr -a ga 'git add .'
 abbr -a gm 'git commit -m'
 abbr -a gp 'git push'
 abbr -a gc 'git clone'
+
+abbr -a op opencode
 # 脚本
 abbr -a update '/home/calendar/dotfiles/scripts/update-packages.sh'
 abbr -a clean '/home/calendar/dotfiles/scripts/cleanup.sh'
@@ -107,3 +111,11 @@ end
 #set -gx MAMBA_ROOT_PREFIX /home/calendar/miniforge3
 #$MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
 # <<< mamba initialize <<<
+
+# =============================================================================
+# Pi Coding Agent 配置
+# =============================================================================
+# 跳过版本检查，减少启动时联网
+set -gx PI_SKIP_VERSION_CHECK 1
+# 关闭安装/更新遥测
+set -gx PI_TELEMETRY 0
