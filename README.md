@@ -52,14 +52,17 @@ sudo systemctl restart keyd
 ### 脚本
 
 - `scripts/migrate-to-life.sh` — 将 D 盘散落数据 rsync 到 `~/life`（dry-run 预览，`--apply` 执行，不删源）
-- `scripts/backup-to-usb.sh` — 将 `~/life` 打包备份到 U 盘（tar.zst 保权限，secrets 用 gpg 加密）
+- `scripts/backup-to-usb.sh` — 交互式备份/恢复 `~/life` ⇄ U 盘（主数据 tar.zst 保权限，secrets 用 7z 口令加密，自动保留最近 N 份）
 
 ```bash
 # 迁移（先预览）
 ~/dotfiles/scripts/migrate-to-life.sh
 ~/dotfiles/scripts/migrate-to-life.sh --apply
 
-# 备份到 U 盘（自动检测，或指定挂载点）
+# 备份到 U 盘（无参数自动检测；不指定操作则进入交互菜单）
 ~/dotfiles/scripts/backup-to-usb.sh
-~/dotfiles/scripts/backup-to-usb.sh /mnt/usb
+~/dotfiles/scripts/backup-to-usb.sh /mnt/usb --backup
+~/dotfiles/scripts/backup-to-usb.sh --restore     # 恢复（交互选择备份）
+~/dotfiles/scripts/backup-to-usb.sh --list        # 列出已有备份
+~/dotfiles/scripts/backup-to-usb.sh --keep 10     # 保留最近 10 份
 ```

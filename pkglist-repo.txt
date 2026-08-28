@@ -1,6 +1,7 @@
 7zip
 alacritty
 amd-ucode
+ansible
 archlinuxcn-keyring
 base
 base-devel
@@ -66,6 +67,7 @@ os-prober
 pandoc-bin
 pass
 pass-otp
+perf
 pipewire-alsa
 pipewire-pulse
 python-pip
@@ -76,9 +78,11 @@ rsync
 rtkit
 slurp
 stow
+strace
 tailscale
 task
 taskwarrior-tui
+tcpdump
 tmux
 tree
 unzip

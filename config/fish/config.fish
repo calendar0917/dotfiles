@@ -3,6 +3,8 @@
 # =============================================================================
 
 # 路径设置
+# 添加 uv/本地全局工具路径
+fish_add_path $HOME/.local/bin
 # 添加 npm 全局包路径
 fish_add_path $HOME/.npm-global/bin
 fish_add_path $HOME/.cargo/bin
