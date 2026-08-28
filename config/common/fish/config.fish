@@ -7,7 +7,7 @@
 fish_add_path $HOME/.local/bin
 # 添加 npm 全局包路径
 fish_add_path $HOME/.npm-global/bin
-fish_add_path $HOME/.cargo/bin
+# fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/go/bin
 fish_add_path $HOME/.opencode/bin
 # fnm 初始化

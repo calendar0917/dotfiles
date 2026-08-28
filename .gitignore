@@ -13,7 +13,7 @@ secrets.el
 secrets.*
 
 # nvim
-config/nvim/lazy-lock.json
+config/common/nvim/lazy-lock.json
 
 #clash
 config.yaml

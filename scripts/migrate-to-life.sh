@@ -34,7 +34,7 @@ if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
 fi
 
 EXCLUDES="${HOME}/.config/backup/excludes"
-[[ -f "$EXCLUDES" ]] || EXCLUDES="${DOTFILES_DIR}/config/backup/excludes"
+[[ -f "$EXCLUDES" ]] || EXCLUDES="${DOTFILES_DIR}/config/common/backup/excludes"
 
 RSYNC_BASE="rsync -a --info=progress2 --exclude-from=$EXCLUDES"
 if [[ $DRY_RUN -eq 1 ]]; then

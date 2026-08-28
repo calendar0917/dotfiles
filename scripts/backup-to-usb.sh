@@ -425,7 +425,7 @@ menu() {
 
 # ── 入口 ─────────────────────────────────────────
 EXCLUDES="${HOME}/.config/backup/excludes"
-[[ -f "$EXCLUDES" ]] || EXCLUDES="${DOTFILES_DIR}/config/backup/excludes"
+[[ -f "$EXCLUDES" ]] || EXCLUDES="${DOTFILES_DIR}/config/common/backup/excludes"
 
 detect_usb
 BACKUP_DIR="$USB/backup"
