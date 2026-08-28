@@ -1,3 +1,4 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR fish_user_paths:/home/calendar/\x2ecargo/bin
+SETUVAR __fish_initialized:4300
+SETUVAR fish_user_paths:/home/calendar/\x2eopencode/bin\x1e/home/calendar/\x2ecargo/bin

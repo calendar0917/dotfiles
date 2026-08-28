@@ -9,6 +9,7 @@ fish_add_path $HOME/.local/bin
 fish_add_path $HOME/.npm-global/bin
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/go/bin
+fish_add_path $HOME/.opencode/bin
 # fnm 初始化
 # fnm env --use-on-cd --shell fish | source
 # pnpm
