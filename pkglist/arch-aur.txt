@@ -1,8 +1,8 @@
 appimagelauncher
 clash-verge-rev-bin
-claude-code
+fcitx5-vinput-bin
 google-chrome
 miniconda3
 pass-import
-pi
-wemeet-bin
+yay-bin
+yay-bin-debug
